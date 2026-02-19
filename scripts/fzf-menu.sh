@@ -29,11 +29,12 @@ main() {
 		return 0
 	fi
 
+	local dir="$(snapshot_dir)"
 	local delete_key="$(get_delete_key)"
 	local selected="$(echo "$snapshots" | fzf \
 		--reverse \
 		--header="Select snapshot (Enter: restore, $delete_key: delete, Esc: cancel)" \
-		--bind "$delete_key:execute($CURRENT_DIR/delete-snapshot.sh {})+reload($CURRENT_DIR/fzf-menu.sh get_snapshots)")"
+		--bind "$delete_key:reload(rm '$dir/{}' 2>/dev/null; find '$dir' -maxdepth 1 -type l -printf '%f\n' 2>/dev/null | sort)")"
 
 	if [ -n "$selected" ]; then
 		"$CURRENT_DIR/restore-snapshot.sh" "$selected"
