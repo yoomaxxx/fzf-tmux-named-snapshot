@@ -1,6 +1,8 @@
-# tmux-named-snapshot
+# fzf-tmux-named-snapshot
 
-This plugin will allow you to save and restore
+A fork of [tmux-named-snapshot](https://github.com/spywhere/tmux-named-snapshot) with fzf integration for interactive snapshot selection.
+
+This plugin allows you to save and restore
 [tmux-resurrect](https://github.com/tmux-plugins/tmux-resurrect) snapshots
 into its own separate snapshot, making it easy to keep track of tmux session setup.
 
@@ -13,6 +15,16 @@ This plugin is shipped with these key bindings
 - `Prefix + Ctrl-n`: Restore 'manual' snapshot
 - `Prefix + N`: Prompt for a name and restore the snapshot by that name
 - `Prefix + Ctrl-f`: Open fzf menu to select and restore a snapshot
+
+### FZF Menu
+
+The fzf menu provides an interactive way to browse and restore snapshots:
+
+- Shows all saved named snapshots
+- Preview panel displays snapshot info (target file, modification date, size)
+- Use arrow keys or Ctrl-j/Ctrl-k to navigate
+- Press Enter to restore selected snapshot
+- Press Esc to cancel
 
 Check out [Configurations](#configurations) section below to customize the
 key bindings and any additional options.
@@ -119,7 +131,7 @@ functionalities (most of these tools should be already installed on most unix sy
 ### Using [TPM](https://github.com/tmux-plugins/tpm)
 
 ```
-set -g @plugin 'spywhere/tmux-named-snapshot'
+set -g @plugin 'yoomaxxx/fzf-tmux-named-snapshot'
 ```
 
 ### Manual
@@ -127,7 +139,7 @@ set -g @plugin 'spywhere/tmux-named-snapshot'
 Clone the repo
 
 ```
-$ git clone https://github.com/spywhere/tmux-named-snapshot ~/target/path
+$ git clone https://github.com/yoomaxxx/fzf-tmux-named-snapshot ~/target/path
 ```
 
 Then add this line into your `.tmux.conf`
