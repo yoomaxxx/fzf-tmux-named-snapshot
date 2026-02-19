@@ -21,7 +21,6 @@ This plugin is shipped with these key bindings
 The fzf menu provides an interactive way to browse and restore snapshots:
 
 - Shows all saved named snapshots
-- Preview panel displays snapshot info (target file, modification date, size)
 - Use arrow keys or Ctrl-j/Ctrl-k to navigate
 - Press Enter to restore selected snapshot
 - Press Esc to cancel

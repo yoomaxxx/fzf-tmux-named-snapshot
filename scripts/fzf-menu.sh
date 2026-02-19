@@ -12,21 +12,6 @@ get_snapshots() {
 	fi
 }
 
-get_snapshot_info() {
-	local name="$1"
-	local dir="$(snapshot_dir)"
-	local link_path="$dir/$name"
-
-	if [ -L "$link_path" ]; then
-		local target="$(readlink "$link_path")"
-		local mtime="$(stat -c "%y" "$target" 2>/dev/null | cut -d'.' -f1)"
-		local size="$(stat -c "%s" "$target" 2>/dev/null)"
-		echo "Target: $target"
-		echo "Modified: $mtime"
-		echo "Size: ${size:-0} bytes"
-	fi
-}
-
 main() {
 	if ! command -v fzf &>/dev/null; then
 		tmux display-message "fzf not found. Please install fzf."
@@ -42,17 +27,11 @@ main() {
 
 	local selected="$(echo "$snapshots" | fzf \
 		--reverse \
-		--header="Select snapshot to restore (Esc to cancel)" \
-		--preview-window=right:50% \
-		--preview="$CURRENT_DIR/fzf-menu.sh preview {}")"
+		--header="Select snapshot to restore (Esc to cancel)")"
 
 	if [ -n "$selected" ]; then
 		"$CURRENT_DIR/restore-snapshot.sh" "$selected"
 	fi
 }
 
-if [ "$1" = "preview" ]; then
-	get_snapshot_info "$2"
-else
-	main
-fi
+main
