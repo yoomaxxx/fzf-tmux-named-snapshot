@@ -12,6 +12,10 @@ get_snapshots() {
 	fi
 }
 
+get_delete_key() {
+	echo "$(get_tmux_option "$delete_key_option" "$default_delete_key")"
+}
+
 main() {
 	if ! command -v fzf &>/dev/null; then
 		tmux display-message "fzf not found. Please install fzf."
@@ -25,9 +29,11 @@ main() {
 		return 0
 	fi
 
+	local delete_key="$(get_delete_key)"
 	local selected="$(echo "$snapshots" | fzf \
 		--reverse \
-		--header="Select snapshot to restore (Esc to cancel)")"
+		--header="Select snapshot (Enter: restore, $delete_key: delete, Esc: cancel)" \
+		--bind "$delete_key:execute($CURRENT_DIR/delete-snapshot.sh {})+reload($CURRENT_DIR/fzf-menu.sh get_snapshots)")"
 
 	if [ -n "$selected" ]; then
 		"$CURRENT_DIR/restore-snapshot.sh" "$selected"
