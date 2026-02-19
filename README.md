@@ -12,6 +12,7 @@ This plugin is shipped with these key bindings
 - `Prefix + M`: Prompt for a name and save the snapshot under that name
 - `Prefix + Ctrl-n`: Restore 'manual' snapshot
 - `Prefix + N`: Prompt for a name and restore the snapshot by that name
+- `Prefix + Ctrl-f`: Open fzf menu to select and restore a snapshot
 
 Check out [Configurations](#configurations) section below to customize the
 key bindings and any additional options.
@@ -47,6 +48,11 @@ Description: A path (without a trailing slash) to the directory for storing
 named snapshots (missing directory will **NOT** be created automatically)  
 Default: _Empty_ (default to `@resurrect_dir` option)  
 Value: a string to be used as a path
+
+- `@named-snapshot-fzf`  
+Description: Key binding to open fzf menu for selecting and restoring snapshots  
+Default: `C-f` (Ctrl+f)  
+Value: a key string (set to empty string to disable)
 
 ### Examples
 
@@ -108,6 +114,7 @@ functionalities (most of these tools should be already installed on most unix sy
 - `cut`
 - `readlink`
 - `cmp`
+- `fzf` (required for fzf menu feature)
 
 ### Using [TPM](https://github.com/tmux-plugins/tpm)
 
