@@ -79,6 +79,13 @@ set_fzf_binding() {
   fi
 }
 
+set_fzf_save_binding() {
+  local key="$(get_tmux_option "$fzf_save_option" "$default_fzf_save_option")"
+  if [ -n "$key" ]; then
+    tmux bind-key "$key" popup -E "$CURRENT_DIR/scripts/fzf-save-menu.sh"
+  fi
+}
+
 main() {
   local switch_client="$(get_tmux_option "$switch_client_option" "$default_switch_client_option")"
   if [ -n "$switch_client" ]; then
@@ -88,6 +95,7 @@ main() {
   set_save_bindings "$switch_client"
   set_restore_bindings "$switch_client"
   set_fzf_binding
+  set_fzf_save_binding
 }
 
 main
