@@ -11,18 +11,27 @@ into its own separate snapshot, making it easy to keep track of tmux session set
 This plugin is shipped with these key bindings
 
 - `Prefix + Ctrl-m`: Save 'manual' snapshot
-- `Prefix + M`: Prompt for a name and save the snapshot under that name
+- `Prefix + M`: Open fzf menu to save snapshot (create new or overwrite existing)
 - `Prefix + Ctrl-n`: Restore 'manual' snapshot
 - `Prefix + N`: Prompt for a name and restore the snapshot by that name
 - `Prefix + Ctrl-f`: Open fzf menu to select and restore a snapshot
 
 ### FZF Menu
 
-The fzf menu provides an interactive way to browse and restore snapshots:
+The fzf menu provides an interactive way to browse, save, and restore snapshots:
 
+**Restore menu** (`Prefix + Ctrl-f`):
 - Shows all saved named snapshots
 - Use arrow keys or Ctrl-j/Ctrl-k to navigate
 - Press Enter to restore selected snapshot
+- Press Ctrl-d to delete selected snapshot
+- Press Esc to cancel
+
+**Save menu** (`Prefix + M`):
+- Shows existing snapshots (for overwriting)
+- Type a new name to create a new snapshot
+- Select an existing snapshot to overwrite it
+- Press Enter to save
 - Press Esc to cancel
 
 Check out [Configurations](#configurations) section below to customize the
@@ -32,7 +41,7 @@ key bindings and any additional options.
 
 - `@named-snapshot-save`  
 Description: A list of key mapping to be bound to save command  
-Default: `C-m:manual M:*`  
+Default: `C-m:manual`  
 Values: a space separated keymap, in which consists of colon separated strings
 - `@named-snapshot-restore`  
 Description: A list of key mapping to be bound to restore command  
@@ -65,6 +74,16 @@ Description: Key binding to open fzf menu for selecting and restoring snapshots
 Default: `C-f` (Ctrl+f)  
 Value: a key string (set to empty string to disable)
 
+- `@named-snapshot-fzf-save`  
+Description: Key binding to open fzf menu for saving snapshots  
+Default: `M`  
+Value: a key string (set to empty string to disable)
+
+- `@named-snapshot-delete-key`  
+Description: Key binding inside fzf menu to delete selected snapshot  
+Default: `ctrl-d`  
+Value: a key string for fzf binding
+
 ### Examples
 
 To setup the key bindings, the configuration should be put in `.tmux.conf`
@@ -73,14 +92,14 @@ file.
 For example,
 
 ```
-set -g @named-snapshot-save 'C-m:manual M:* C-d:dev'
+set -g @named-snapshot-save 'C-m:manual C-d:dev'
 set -g @named-snapshot-restore 'C-n:manual N:* D:dev'
 ```
 
 will setup the following key bindings
 
 - `Prefix + Ctrl-m`: Save 'manual' snapshot
-- `Prefix + M`: Prompt for a name and save the snapshot under that name
+- `Prefix + M`: Open fzf menu to save snapshot
 - `Prefix + Ctrl-d`: Save 'dev' snapshot
 - `Prefix + Ctrl-n`: Restore 'manual' snapshot
 - `Prefix + N`: Prompt for a name and restore the snapshot by that name
